@@ -16,7 +16,6 @@ pip install -r requirements.txt
  - Update city_code in the job() function to your desired city's code (e.g., 101010100 for Beijing).
  - Change recipient email in the send_email() function (recipient_email@example.com).
 
-
 **Usage**
 - Run the script using Python:
 ```sh
