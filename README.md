@@ -7,7 +7,7 @@
 
 - Install dependencies:
 ```sh
-pip install -r requirements.txt
+pip install requests
 ```
 ***Notes***
 - Update script with your configuration details:
