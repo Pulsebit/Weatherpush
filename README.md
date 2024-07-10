@@ -1,4 +1,4 @@
-****Weather Email Notification****
+***Weather Email Notification***
 
 - 🌤The script retrieves the current weather forecast for the specified city and sends it via email using SMTP. It utilizes the requests, schedule, time, and smtplib libraries for HTTP requests, scheduling, time management, and email handling respectively.
 - 🌦️The script will fetch the current weather information for the specified city, format it into an email, and send it to the recipient's email address specified in the code.
