@@ -21,18 +21,23 @@ def get_weather(city):
     :param city: City code as string
     :return: Weather information as string or error message
     """
-    response = requests.get(WEATHER_API_URL.format(city))
-    data = response.json()
-    
-    if data['status'] == 200:
-        forecast = data['data']['forecast'][0]
-        return (
-            f"{data['cityInfo']['city']} {forecast['ymd']} {forecast['week']}\n"
-            f"Weather: {forecast['type']}\n"
-            f"Temperature: {forecast['high']} {forecast['low']}"
-        )
-    else:
-        return "Weather query failed with status: {}".format(data.get('msg', 'Unknown error'))
+    try:
+        response = requests.get(WEATHER_API_URL.format(city))
+        response.raise_for_status()  # 检查HTTP状态码是否表示成功
+        data = response.json()
+        
+        if data.get('status') == 200:  # 使用get方法来避免KeyError
+            forecast = data.get('data', {}).get('forecast', [{}])[0]  # 提供默认值以避免错误
+            city_info = data.get('cityInfo', {})
+            return (
+                f"{city_info.get('city', 'Unknown City')} {forecast.get('ymd', 'YYYY-MM-DD')} {forecast.get('week', 'Weekday')}\n"
+                f"Weather: {forecast.get('type', 'Unknown')}\n"
+                f"Temperature: {forecast.get('high', 'N/A')} {forecast.get('low', 'N/A')}"
+            )
+        else:
+            return "Weather query failed with status: {}".format(data.get('msg', 'Unknown error'))
+    except requests.RequestException as e:
+        return "Failed to fetch weather data: {}".format(e)
 
 def send_email(subject, body):
     """
